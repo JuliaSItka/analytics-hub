@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Hub – Conscensia</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a3a5c;
+    --blue: #2E75B6;
+    --blue-light: #4a90d4;
+    --beige: #f5ede0;
+    --beige-dark: #ede0ce;
+    --white: #ffffff;
+    --text: #2c2c2c;
+    --text-muted: #6b7280;
+    --card-bg: #ffffff;
+    --border: #e2d9cc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--beige);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--navy);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .topbar-brand {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--white);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .topbar-brand span { color: var(--blue-light); }
+  .topbar-nav { display: flex; gap: 28px; }
+  .topbar-nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: white; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e4d82 60%, #2E75B6 100%);
+    padding: 64px 48px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: 80px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-bottom: 14px;
+  }
+  .hero-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 16px;
+    max-width: 560px;
+  }
+  .hero-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .hero-desc a {
+    color: var(--blue-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(74,144,212,0.4);
+    transition: border-color 0.2s;
+  }
+  .hero-desc a:hover { border-color: var(--blue-light); }
+  .hero-stats {
+    display: flex;
+    gap: 36px;
+    margin-top: 8px;
+  }
+  .hero-stat-num {
+    font-family: 'Raleway', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    margin-bottom: 52px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: box-shadow 0.22s, transform 0.22s, border-color 0.22s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--blue);
+    opacity: 0;
+    transition: opacity 0.22s;
+  }
+  .card:hover {
+    box-shadow: 0 6px 28px rgba(26,58,92,0.10);
+    transform: translateY(-2px);
+    border-color: #c8d8e8;
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .card-icon {
+    width: 42px; height: 42px;
+    background: #eaf2fb;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+  .card-title-wrap { flex: 1; }
+  .card-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .card-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    background: #eaf2fb;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-top: 5px;
+  }
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .card-contents {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    margin-top: 2px;
+  }
+  .card-contents li {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .card-contents li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+    font-weight: 600;
+  }
+  .card-link {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .card-link a {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+  .card-link a:hover { gap: 10px; }
+  .card-link a::after { content: '→'; }
+
+  /* ACCESS BADGE */
+  .card-access {
+    font-size: 11px;
+    color: #7c6f5e;
+    background: #f7f0e6;
+    border: 1px solid var(--beige-dark);
+    border-radius: 4px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card-access::before { content: '🔒'; font-size: 11px; }
+
+  /* ANIMATION */
+  .card { animation: fadeUp 0.4s both; }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.10s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.20s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.30s; }
+  .card:nth-child(7) { animation-delay: 0.35s; }
+  .card:nth-child(8) { animation-delay: 0.40s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">con<span>scensia</span> · Analytics Hub</div>
+  <nav class="topbar-nav">
+    <a href="#">Home</a>
+    <a href="#">HR</a>
+    <a href="#">Customer Success</a>
+    <a href="#">Finance</a>
+    <a href="#">IT</a>
+    <a href="#">Marketing</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Internal Analytics Portal</div>
+  <h1 class="hero-title">Power BI Reports</h1>
+  <p class="hero-desc">
+    You can find all available analytics for you in
+    <a href="https://app.powerbi.com/groups/me/apps?ctid=4e358e6f-c744-4750-be0f-7d31bd3eec75&experience=power-bi" target="_blank">Power BI ↗</a>.
+    Below is the list and description of all Power BI reports available in the company.
+  </p>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">13</div>
+      <div class="hero-stat-label">Reports</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">5</div>
+      <div class="hero-stat-label">Domains</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- CUSTOMER SUCCESS -->
+  <div class="section-header">
+    <div class="section-title">Customer Success</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📊</div>
+        <div class="card-title-wrap">
+          <div class="card-title">CS Dashboard</div>
+          <span class="card-tag">Customer Success</span>
+        </div>
+      </div>
+      <p class="card-desc">Provides an overview of active clients, team size distribution, and workload allocation across Customer Success Managers.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📈</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Team Dynamics</div>
+          <span class="card-tag">Customer Success</span>
+        </div>
+      </div>
+      <p class="card-desc">Analyzes changes in team headcount and staff retention effectiveness across clients, teams, and CSMs for a selected period. Tracks turnover rates and retention metrics.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🤝</div>
+        <div class="card-title-wrap">
+          <div class="card-title">SCM – Steering Committee Meeting</div>
+          <span class="card-tag">Customer Success</span>
+        </div>
+      </div>
+      <p class="card-desc">Consolidated report with key customer information used by the CS team for Steering Committee meetings.</p>
+      <ul class="card-contents">
+        <li>Employee distribution by Job and Seniority</li>
+        <li>Voluntary Turnover</li>
+        <li>Count of employees and leavers by period and reason</li>
+        <li>Average sick days: Customer vs. Consensia</li>
+        <li>Internal Mobility</li>
+        <li>Employee Professional Experience by Customer and Company</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">💰</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Project Cost Analysis</div>
+          <span class="card-tag">Finance</span>
+        </div>
+      </div>
+      <p class="card-desc">Financial report based on data from Business Central, providing cost and profitability insights grouped by Customer and Project.</p>
+      <ul class="card-contents">
+        <li>Average cost per developer (salary, center fee, social costs)</li>
+        <li>Gross Margin</li>
+        <li>Revenue</li>
+        <li>Direct Costs</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- HR -->
+  <div class="section-header">
+    <div class="section-title">HR Analytics</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🚪</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Attrition</div>
+          <span class="card-tag">HR</span>
+        </div>
+      </div>
+      <p class="card-desc">Overview of employee turnover across the organization, with breakdowns by Country, Year, Company, Customer, and Team. Tracks leavers by period and reason, and includes Retention Analytics.</p>
+      <div class="card-link"><a href="https://app.powerbi.com/groups/me/apps/e30d8d47-ddb7-4539-b30e-97588526de21/reports/edfa9d4c-e952-4071-8900-0272aa417e04/f5ac8ad61773b4e7057a?experience=power-bi" target="_blank">Open in Power BI</a></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🆕</div>
+        <div class="card-title-wrap">
+          <div class="card-title">New Hire Turnover</div>
+          <span class="card-tag">HR</span>
+        </div>
+      </div>
+      <p class="card-desc">Tracks turnover of newly hired employees, analyzing retention at the 3, 6, and 9-month milestones after joining the company.</p>
+      <div class="card-link"><a href="https://app.powerbi.com/groups/me/apps/e30d8d47-ddb7-4539-b30e-97588526de21/reports/9844a7b1-a440-41f6-8b44-778eac93db4f/baa729ab8f0a8e71ea52?experience=power-bi" target="_blank">Open in Power BI</a></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">😊</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Satisfaction Survey (eNPS)</div>
+          <span class="card-tag">HR</span>
+        </div>
+      </div>
+      <p class="card-desc">Analytics based on results from the quarterly Employee Satisfaction Survey, covering ESI, eNPS, and participation rate with breakdowns by department, period, and individual questions.</p>
+      <div class="card-link"><a href="https://app.powerbi.com/groups/me/apps/e30d8d47-ddb7-4539-b30e-97588526de21/reports/43db8d80-aef6-4342-9c46-7a7c5acb1d7f/ReportSection?experience=power-bi" target="_blank">Open in Power BI</a></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">⭐</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Performance Review (oPR)</div>
+          <span class="card-tag">HR</span>
+        </div>
+      </div>
+      <p class="card-desc">Analytics based on self-evaluation surveys, aggregated at the team level. Access is restricted to managers — each manager can view data only for their subordinates.</p>
+      <ul class="card-contents">
+        <li>Performance indicator</li>
+        <li>Working factors</li>
+        <li>Motivating factors</li>
+        <li>Salary satisfaction</li>
+        <li>Manager and employee evaluation comparison</li>
+      </ul>
+      <div class="card-access">Managers only — view subordinates' data</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🏖️</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Vacation Usage Report</div>
+          <span class="card-tag">HR</span>
+        </div>
+      </div>
+      <p class="card-desc">Tracks employee sick leave and vacation day usage, including remaining balances per employee.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🗓️</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Vacation Calculator</div>
+          <span class="card-tag">HR</span>
+        </div>
+      </div>
+      <p class="card-desc">A self-service tool for calculating vacation balance as of a specific date. Supports two scenarios: balance on the last day of a current project and projected balance on the start day of a new project. Data is refreshed multiple times per day (Kyiv time).</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🛡️</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Military Status</div>
+          <span class="card-tag">HR</span>
+        </div>
+      </div>
+      <p class="card-desc">Tracks employee deferment status with breakdowns by period and customer. Includes deferment rate, travel availability, and mobilization cases.</p>
+    </div>
+
+  </div>
+
+  <!-- PERSONAL DATA -->
+  <div class="section-header">
+    <div class="section-title">Employee Data</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">👤</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Employee Personal Data</div>
+          <span class="card-tag">HR</span>
+        </div>
+      </div>
+      <p class="card-desc">Central repository of employee personal records, including contact details and personal information.</p>
+      <ul class="card-contents">
+        <li>Personal Contacts — work, client, and personal emails; mobile numbers</li>
+        <li>Personal Information — children's data, age and birthdays, vehicle info, emergency contacts</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- IT & MARKETING -->
+  <div class="section-header">
+    <div class="section-title">IT & Marketing</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">💻</div>
+        <div class="card-title-wrap">
+          <div class="card-title">IT Analytics</div>
+          <span class="card-tag">IT</span>
+        </div>
+      </div>
+      <p class="card-desc">Inventory analytics covering company equipment, including device distribution and age analysis.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🎯</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Marketing Analytics</div>
+          <span class="card-tag">Marketing</span>
+        </div>
+      </div>
+      <p class="card-desc">Paid campaign performance report covering Meta Ads, Google Ads, and LinkedIn — including cost per click, impression, and site visit metrics. Also includes Google Analytics data on paid and organic traffic for the main and career sites, as well as LinkedIn post engagement analytics.</p>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
